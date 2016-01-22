@@ -99,7 +99,8 @@ if (!$fp) {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             # Get the response
             $response = curl_exec($ch);
-            echo $response . '\n';
+            echo $response ;
+            echo PHP_EOL;
             curl_close($ch);
 
             //store time last sent
