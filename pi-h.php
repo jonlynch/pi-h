@@ -7,14 +7,16 @@
  This command checks that the script is running every minute, if it isn't running
  then it is started.
 
- * * * * * pgrep php > /dev/null || php /home/pi/pi-h.php
+ * * * * * pgrep php > /dev/null || php /home/pi/pi-h/pi-h.php
+
+
+ To auto update this script set a weekly cron job to fetch the latest from github
 
  */
 
 //TODO log the responses and any errors
-// Add the credentials given to you by the MRMap team.
-$userid = "username";
-$password = "password";
+
+require_once('config.php');
 
 //endpoint to send position data to mrmap
 $sendUrl = "https://api.wmrt.org.uk/helicopters";
@@ -27,16 +29,20 @@ $raspberypi_stream = "tcp://localhost:30003";
 
 //go and get the helicopter hex ids and mrmap ids
 $json = file_get_contents('http://api.wmrt.org.uk/helicopter-callsigns');
+
 $helicopters_array = json_decode($json);
 $helicopters = [];
 foreach ($helicopters_array as $helicopter_object) {
     $helicopters[$helicopter_object->local_name] = $helicopter_object->id;
 }
 
+if (count($helicopters) < 1 ) {
+    die('unable to get list of helicopters');
+}
+
 $sent = [];
 
 //need to convert from lat long to british national grid
-//require('conversions.php');
 $converter = new Conversions();
 
 // This script runs for 24 hours.
