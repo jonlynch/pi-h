@@ -37,7 +37,9 @@ foreach ($helicopters_array as $helicopter_object) {
 }
 
 if (count($helicopters) < 1 ) {
-    die('unable to get list of helicopters');
+    die(date("Y-m-d H:i:s") . ' - unable to get list of helicopters shutting down' . PHP_EOL);
+} else {
+    echo date("Y-m-d H:i:s") . ' - pi-h started, ' . count($helicopters) . ' aircraft to be tracked.';
 }
 
 $sent = [];
@@ -52,7 +54,7 @@ $end_time = time() + 24 * 60 * 60;
 //connect to the stream from the raspberypi
 $fp = stream_socket_client($raspberypi_stream, $errno, $errstr, 30);
 if (!$fp) {
-    die ("$errstr ($errno)<br />\n");
+    die (date("Y-m-d H:i:s") . " - unable to connect to DUMP1090, shutting down." . PHP_EOL);
 } else {
     //forever
     while ((!feof($fp)) and (time() < $end_time)) {
@@ -108,6 +110,7 @@ if (!$fp) {
         }
     }
 fclose($fp);
+echo date("Y-m-d H:i:s") . ' - pi-h shutting down.';
 }
 
 
