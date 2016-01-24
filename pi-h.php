@@ -39,7 +39,7 @@ foreach ($helicopters_array as $helicopter_object) {
 if (count($helicopters) < 1 ) {
     die(date("Y-m-d H:i:s") . ' - unable to get list of helicopters shutting down' . PHP_EOL);
 } else {
-    echo date("Y-m-d H:i:s") . ' - pi-h started, ' . count($helicopters) . ' aircraft to be tracked.';
+    echo date("Y-m-d H:i:s") . ' - pi-h started, ' . count($helicopters) . ' aircraft to be tracked.' . PHP_EOL;
 }
 
 $sent = [];
@@ -110,7 +110,7 @@ if (!$fp) {
         }
     }
 fclose($fp);
-echo date("Y-m-d H:i:s") . ' - pi-h shutting down.';
+echo date("Y-m-d H:i:s") . ' - pi-h shutting down.' . PHP_EOL;
 }
 
 
