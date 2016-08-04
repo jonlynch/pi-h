@@ -79,6 +79,8 @@ if (!$fp) {
         if (( ! $lat ) || (! $lon )) {
         continue;
         }
+        $time = date_parse($parts[6] . ' ' . $parts[7]);
+        $position_time = mktime($time['hour'], $time['minute'], $time['second'], $time['month'], $time['day'], $time['year']);
 
         //check the time it was last entered into database by this station
         if (!isset($sent[$radioId]) or ($sent[$radioId] + $position_interval < time() )) {
@@ -90,7 +92,8 @@ if (!$fp) {
                 'y' => floor($coords[1]),
                 'validFor'=> 120,
                 'radioId' => $radioId,
-                'type' => "aircraft"
+                'type' => "aircraft",
+                'time' => $position_time
             ];
             $ch = curl_init($sendUrl);
             # Form data string
@@ -101,7 +104,7 @@ if (!$fp) {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             # Get the response
             $response = curl_exec($ch);
-            echo $response ;
+            echo $response;
             echo PHP_EOL;
             curl_close($ch);
 
