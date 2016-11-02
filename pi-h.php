@@ -28,7 +28,7 @@ $position_interval = 30; //seconds
 $raspberypi_stream = "tcp://localhost:30003";
 
 //go and get the helicopter hex ids and mrmap ids
-$json = file_get_contents('http://api.wmrt.org.uk/helicopter-callsigns');
+$json = file_get_contents('https://api.wmrt.org.uk/helicopter-callsigns');
 
 $helicopters_array = json_decode($json);
 $helicopters = [];
